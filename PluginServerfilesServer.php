@@ -38,10 +38,12 @@ class PluginServerfilesServer{
     $this->data->set('settings/remote_in_settings', $remote_in_settings);
     $this->data->set('request', wfRequest::getAll());
     $this->data->set('folder_exist', wfFilesystem::fileExist(wfGlobals::getAppDir().wfRequest::get('folder')));
-    $this->data->set('file_exist', wfFilesystem::fileExist(wfGlobals::getAppDir().wfRequest::get('folder').'/'.wfRequest::get('filename')));
-    $this->data->set('content-type', '');
-    $this->data->set('content', '');
-    $this->data->set('size', '');
+    if(wfRequest::get('filename')){
+      $this->data->set('file_exist', wfFilesystem::fileExist(wfGlobals::getAppDir().wfRequest::get('folder').'/'.wfRequest::get('filename')));
+    }
+    $this->data->set('file/type', '');
+    $this->data->set('file/content', '');
+    $this->data->set('file/size', '');
     $this->data->set('files', array());
 
     /**
@@ -60,10 +62,10 @@ class PluginServerfilesServer{
      *
      */
     if($this->data->get('file_exist')){
-      $this->data->set('content-type', mime_content_type(wfGlobals::getAppDir().wfRequest::get('folder').'/'.wfRequest::get('filename')));
+      $this->data->set('file/type', mime_content_type(wfGlobals::getAppDir().wfRequest::get('folder').'/'.wfRequest::get('filename')));
       $content = wfFilesystem::getContents(wfRequest::get('folder').'/'.wfRequest::get('filename'));
-      $this->data->set('content', base64_encode($content));
-      $this->data->set('size', filesize(wfGlobals::getAppDir().wfRequest::get('folder').'/'.wfRequest::get('filename')));
+      $this->data->set('file/content', base64_encode($content));
+      $this->data->set('file/size', filesize(wfGlobals::getAppDir().wfRequest::get('folder').'/'.wfRequest::get('filename')));
     }
     /**
      *
