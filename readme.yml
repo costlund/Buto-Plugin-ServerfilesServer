@@ -1,0 +1,43 @@
+readme:
+  name: Buto-Plugin-ServerfilesServer
+  description: |
+    - File server where to get, set, delete, list files.
+    - Use plugin serverfiles/client to use this server from a client. Please read readme how to call this plugin.
+  item:
+    -
+      name: Settings
+      description: |
+        Each folder must be registrated in theme settings file along with ip.
+        ````
+        plugin_modules:
+          file:
+            plugin: serverfiles/server
+            settings:
+              folders:
+                -
+                  name: '/any_folder_relative_to_application_root'
+                  remote_addr:
+                    - 'Ip numbers to be able to connect.'
+        ````
+    -
+      name: Pages
+      item:
+        -
+          name: page_delete_file
+        -
+          name: page_get_file
+        -
+          name: page_get_folder
+        -
+          name: page_set_file
+    -
+      name: Methods
+      item:
+        -
+          name: log
+          description: |
+            Log all request parameters.
+            ````
+            /../buto_data/theme/[theme]/plugin/serverfiles/server/log_241224.yml
+            ````
+
